@@ -43,7 +43,8 @@ responsively([breakpointsArray])(propertyName)([propertyArrayValues]);
 * `propertyArrayValues` — An array of values which maps to provided breakpoints. By default, the first value is applied without a media query, while the rest of the values are applied as children of media query selectors.
 
 ### `breakpointsArray` and `propertyArrayValues` values
-* Support all unit kinds (px, em, rem, vw, vh, %, etc.). If a unitless value is passed, it will automatically convert to `px`.
+* Support all unit kinds (px, em, rem, vw, vh, %, etc.).<br>
+If a unitless value is passed, it will automatically convert to `px`.
 ```javascript
 responsive('margin-top')([10, 20, 30, '4em', '5rem']);
 ```
@@ -64,7 +65,7 @@ margin-top: 10px;
 }
 ```
 
-* Clean output
+* Clean output <br>
 The number of generated breakpoints depends on the number of passed property values.
 ```javascript
 responsive('margin')([10]);
