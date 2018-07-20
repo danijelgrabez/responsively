@@ -8,10 +8,11 @@ Responsively adjust the `value` of the passed property according to passed `brea
 
 ### Simple flow
 1. Define breakpoints for responsively
-2. Call the function with desired property and its responsive values
+2. Call `responsively` with desired property and its responsive values
 3. Done 😇
 
 ```javascript
+import React from 'react';
 import { css } from 'react-emotion';
 import responsively from 'responsively';
 
@@ -23,6 +24,42 @@ const baseStyles = css`${responsive('margin-top')([10, 20, 30, 40, 50])};`;
 
 <Component className={css`${responsive('margin-top')([10, 20, 30, 40, 50])};`} />
 ```
+
+### Use Responsively as component props
+Another handy approach is to integrate responsively in component:
+```javascript
+import React from 'react';
+import styled, { css } from 'react-emotion';
+import responsively from 'responsively';
+
+const responsive = responsively([480, 768, 990, 1170]);
+
+const baseStyles = ({ theme, property, values }) =>
+  css`
+    ${responsive(property)(values)};
+  `;
+
+const BoxStyles = styled('div')(baseStyles);
+
+/**
+ * Box component
+ */
+const Box = props => <BoxStyles {...props} />;
+
+export default Box;
+```
+
+and then define its propery and values as props:
+ ```javascript
+import Box from '../ui';
+
+...
+
+<Box property="margin" values={[10, 20, 30, 40, 50]}>
+   <h1>Section Heading</h1>
+</Box>
+ ```
+
 
 ## Install
 ```npm i responsively -S```
