@@ -1,16 +1,17 @@
 {
   "name": "responsively",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Easily adjust components with responsive, mobile-frist approach in mind.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage --no-cache --ci --runInBand"
+    "test": "jest --coverage --no-cache --ci --runInBand",
+    "build": "babel src --presets babel-preset-es2015 --out-dir dist",
+    "prepare": "npm run build"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
+    "babel-cli": "6",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
-    "babel-plugin-emotion": "^8.0.6",
     "babel-plugin-transform-define": "^1.3.0",
     "babel-preset-env": "^1.5.1",
     "eslint": "^4.19.1",
@@ -32,9 +33,7 @@
   "author": "Danijel Grabez <danijel.grabez@gmail.com> (http://www.danijelgrabez.com)",
   "repository": "https://github.com/danijelgrabez/responsively",
   "license": "MIT",
-  "jest": {
-    "transform": {
-      "^.+\\.js?$": "babel-jest"
-    }
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1"
   }
 }

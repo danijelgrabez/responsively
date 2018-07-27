@@ -29,12 +29,13 @@ const baseStyles = css`${responsive('margin-top')([10, 20, 30, 40, 50])};`;
 Another handy approach is to integrate responsively in component:
 ```javascript
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import responsively from 'responsively';
 
 const responsive = responsively([480, 768, 990, 1170]);
 
-const baseStyles = ({ theme, property, values }) =>
+const baseStyles = ({ property, values }) =>
   css`
     ${responsive(property)(values)};
   `;
@@ -44,7 +45,12 @@ const BoxStyles = styled('div')(baseStyles);
 /**
  * Box component
  */
-const Box = props => <BoxStyles {...props} />;
+const Box = ({ property, values }) => <BoxStyles property={property} values={values} {...props} />;
+
+Box.propTypes = {
+  property: PropTypes.string.isRequired,
+  values: PropTypes.array.isRequired,
+};
 
 export default Box;
 ```
