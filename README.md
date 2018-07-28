@@ -87,7 +87,7 @@ responsively([breakpointsArray])(propertyName)([propertyArrayValues]);
 
 ### `breakpointsArray` and `propertyArrayValues` values
 * Support all unit kinds (px, em, rem, vw, vh, %, etc.).<br>
-If a unitless value is passed, it will automatically convert to `px`.
+If a unitless value is passed, it will automatically be converted to `px`. CSS properties with unitless values are processed as is (e.g. `line-height: 1.5;` or `flex: 1;`).
 ```javascript
 responsive('margin-top')([10, 20, 30, '4em', '5rem']);
 ```
