@@ -1,6 +1,14 @@
-import responsively from '../';
+import Responsively from '../';
 
-const responsive = responsively([480, 768, 990, 1170]);
+// Configure breakpoints
+Responsively.configureBreakpoints([480, 768, 990, 1180]);
+
+/*
+  Destruct responsive for easier usage.
+  Before: Responsively.responsive(property)(values);
+  Now: responsive(property)(values);
+*/
+const { responsive } = Responsively;
 
 describe('Tests for responsively function', () => {
   it('check result for one input value', () => {

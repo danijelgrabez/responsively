@@ -1,70 +1,118 @@
 # Responsively
 Responsively is created with the intention to easily adjust components with a responsive, mobile-first approach in mind; it may resemble single purpose classes (e.g. `.mt-0`, or `.mt-0--mobile`).
 
-This library plays nicely with [emotion](https://emotion.sh/) and [styled components](https://www.styled-components.com/) since the code output is string.
+This library plays nicely with libraries such 👩‍🎤 [Emotion](https://emotion.sh/) and 💅 [Styled Components](https://www.styled-components.com/) since the code output is string.
 
 ## Usage
-Responsively adjust the `value` of the passed property according to passed `breakpoints`. Breakpoints can be defined on a component/page basis, but it can also be defined across the whole app, depending on one's needs.
+This library adjust the `value` of the passed property according to passed `breakpoints`. Breakpoints can be defined on a component/page basis, but it can also be defined across the whole app, depending on one's needs.
 
-### Simple flow
-1. Define breakpoints for responsively
-2. Call `responsively` with desired property and its responsive values
+## Simple flow
+1. Configure breakpoints
+2. Implement responsively in one of the following ways:
+    - Call the function with desired property and its responsive values via styles
+    - Pass props to component with supported [functions](https://github.com/danijelgrabez/responsively/blob/responsive-props/documentation/Property-list.md), or
+    - Pass `property` and `values` props to the component for single purpose usage
 3. Done 😇
 
+### Option 1: Call the function with desired property and its responsive values in style declaration
 ```javascript
 import React from 'react';
 import { css } from 'react-emotion';
-import responsively from 'responsively';
+import Responsively from 'responsively';
 
-const responsive = responsively([480, 768, 990, 1170]);
+Responsively.configureBreakpoints([480, 768, 990, 1170]);
 
-const baseStyles = css`${responsive('margin-top')([10, 20, 30, 40, 50])};`;
+const baseStyles = css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 50])};`;
 
-// or, add responsively directly to component
+// or, add responsively directly to the component
 
-<Component className={css`${responsive('margin-top')([10, 20, 30, 40, 50])};`} />
+<Component className={css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 50])};`} />
 ```
 
-### Use Responsively as component props
-Another handy approach is to integrate responsively in component:
+### Option 2: Pass props to component with supported functions
+Another handy approach is to integrate responsively functions to the component. This would provide an option to pass multiple responsive props to component. Check the documentation for all available [functions](https://github.com/danijelgrabez/responsively/blob/responsive-props/documentation/Property-list.md).
+
+```javascript
+import React from 'react';
+import styled, { css } from 'react-emotion';
+import Responsively, { background, text } from 'responsively';
+
+Responsively.configureBreakpoints([480, 768, 990, 1170]);
+
+const SectionStyles = styled('section')(
+  ...background,
+  ...text,
+);
+
+/**
+ * Section component
+ */
+const Section = props => <SectionStyles {...props} />;
+
+export default Section;
+
+```
+
+then, define as many properties as you need:
+ ```javascript
+import Section from '../ui';
+
+...
+
+<Section
+  background={['#f9eeef', '#f5cbce', '#f2afb4', '#ef717c', '#f74b59']}
+  color={['black', 'white']}
+  textTransform={['uppercase']}
+>
+  <h1>Section Heading</h1>
+</Section>
+ ```
+
+### Option 3: Pass `property` and `values` props to the component for single purpose usage
 ```javascript
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
-import responsively from 'responsively';
+import Responsively from 'responsively';
 
-const responsive = responsively([480, 768, 990, 1170]);
+Responsively.configureBreakpoints([480, 768, 990, 1170]);
 
 const baseStyles = ({ property, values }) =>
   css`
-    ${responsive(property)(values)};
+    ${Responsively.responsive(property)(values)};
   `;
 
-const BoxStyles = styled('div')(baseStyles);
+const SectionStyles = styled('div')(baseStyles);
 
 /**
- * Box component
+ * Section component
  */
-const Box = ({ property, values }) => <BoxStyles property={property} values={values} {...props} />;
+const Section = ({ property, values }) => <SectionStyles property={property} values={values} {...props} />;
 
-Box.propTypes = {
+Section.propTypes = {
   property: PropTypes.string.isRequired,
   values: PropTypes.array.isRequired,
 };
 
-export default Box;
+export default Section;
 ```
 
-and then define its propery and values as props:
+then, define its property and values as props:
  ```javascript
-import Box from '../ui';
+import Section from '../ui';
 
 ...
 
-<Box property="margin" values={[10, 20, 30, 40, 50]}>
+<Section property="margin" values={[10, 20, 30, 40, 50]}>
    <h1>Section Heading</h1>
-</Box>
+</Section>
  ```
+
+ ## Try It Out
+ Try the examples on CodeSandbox:
+ - Option 1: 👩‍🎤 [Emotion](https://codesandbox.io/s/xjyr0ox38w) | 💅 [Styled Components](https://codesandbox.io/s/7mo04o1361)
+ - Option 2: 👩‍🎤 [Emotion](https://codesandbox.io/s/zn41vw6n9p)
+ - Option 3: 👩‍🎤 [Emotion](https://codesandbox.io/s/wqjymvnyjw) | 💅 [Styled Components](https://codesandbox.io/s/1qwzy9mq)
 
 
 ## Install
@@ -77,7 +125,7 @@ or,
 
 ## API
 ```javascript
-responsively([breakpointsArray])(propertyName)([propertyArrayValues]);
+Responsively.responsive([breakpointsArray])(propertyName)([propertyArrayValues]);
 ```
 
 ### Arguments
@@ -89,7 +137,7 @@ responsively([breakpointsArray])(propertyName)([propertyArrayValues]);
 * Support all unit kinds (px, em, rem, vw, vh, %, etc.).<br>
 If a unitless value is passed, it will automatically be converted to `px`. CSS properties with unitless values are processed as is (e.g. `line-height: 1.5;` or `flex: 1;`).
 ```javascript
-responsive('margin-top')([10, 20, 30, '4em', '5rem']);
+Responsively.responsive('margin-top')([10, 20, 30, '4em', '5rem']);
 ```
 will yield:
 ```css
@@ -111,6 +159,8 @@ margin-top: 10px;
 * Clean output <br>
 The number of generated breakpoints depends on the number of passed property values.
 ```javascript
+const { responsive } = Responsively;
+
 responsive('margin')([10]);
 responsive('padding')([10, 20]);
 ```
@@ -125,7 +175,7 @@ padding: 10px;
 
 * Shorthand values per breakpoint
 ```javascript
-responsive('margin')(['10px 20px']);
+Responsively.responsive('margin')(['10px 20px']);
 ```
 will yield:
 ```css
@@ -134,8 +184,10 @@ margin: 10px 20px;
 
 * Correction for common typos
 ```javascript
-responsive('margin')(['10 20']);
-responsive('padding')(['10px']);
+const { responsive } = Responsively;
+
+Responsively.responsive('margin')(['10 20']);
+Responsively.responsive('padding')(['10px']);
 ```
 will yield:
 ```css
@@ -146,8 +198,9 @@ padding: 10px;
 ### Warning message
 In case one passed more property values then there are breakpoint values, responsively provides the warning in the browser's console.
 ```javascript
-const responsive = responsively([480, 768, 990, 1170]);
-responsive('padding')([10, 20, 30, 40, 50, 60]); // first argument is `default value`
+Responsively.configureBreakpoints([480, 768, 990, 1170]);
+
+Responsively.responsive('padding')([10, 20, 30, 40, 50, 60]); // first argument is `default value`
 ```
 will compile the code, but the last value will be nested in undefined breakpoint:
 ```css
@@ -163,11 +216,11 @@ Console warning message:
 ![responsively-warning](http://www.danijelgrabez.com/public-links/github/responsively/responsively-warning-message.png "Image of responsively warning message")
 
 
-### Skipping breakpoint
+### Skipping breakpoints
 If particular breakpoint needs to be skipped, `undefined` value should be passed:
 ```javascript
-const responsive = responsively([480, 768, 990, 1170]);
-responsive('padding')([undefined, 20, undefined, undefined, 60]);
+Responsively.configureBreakpoints([480, 768, 990, 1170]);
+Responsively.responsive('padding')([undefined, 20, undefined, undefined, 60]);
 ```
 will yield:
 ```css
@@ -183,6 +236,7 @@ will yield:
 
 ## TODO
 - [ ] Merge exact shorthand values, e.g. `'10 10' → 10px`
+- [ ] Add shorthand properties, e.g. `m → margin`, or `p → padding`
 - [ ] `¯\_(ツ)_/¯`
 
 
