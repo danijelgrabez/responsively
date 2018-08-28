@@ -1,3 +1,3 @@
-import { cursor, opacity } from './otherFunctions';
+import { boxShadow, opacity } from './otherFunctions';
 
-export const otherFunctions = [cursor, opacity];
+export const otherFunctions = [boxShadow, opacity];

@@ -1,7 +1,35 @@
+<img src="http://www.danijelgrabez.com/public-links/github/responsively/responsively-logo.gif" width="256" alt= "Responsively logo">
+
 # Responsively
 Responsively is created with the intention to easily adjust components with a responsive, mobile-first approach in mind; it may resemble single purpose classes (e.g. `.mt-0`, or `.mt-0--mobile`).
 
 This library plays nicely with libraries such 👩‍🎤 [Emotion](https://emotion.sh/) and 💅 [Styled Components](https://www.styled-components.com/) since the code output is string.
+
+## Table of contents
+
+<details>
+<!-- toc -->
+
+- [Usage](#usage)  
+- [Simple flow](#simple-flow)  
+  * [1. Configure breakpoints](#1-configure-breakpoints)    
+  * [2. Implementation](#2-implementation)  
+    * [Option 1: Pass props to component with supported functions](#option-1-pass-props-to-component-with-supported-functions)  
+    * [Option 2: Call the function with desired property and its responsive values in style declaration
+](#option-2-call-the-function-with-desired-property-and-its-responsive-values-in-style-declaration)  
+    * [Option 3: Pass property and values props to the component for single purpose usage](#option-3-pass-property-and-values-props-to-the-component-for-single-purpose-usage)  
+- [Try it out](#try-it-out)  
+- [Install](#install)  
+- [API](#api)  
+  * [Arguments](#arguments)  
+  * [`breakpointsArray` and `propertyArrayValues` values](#breakpointsarray-and-propertyarrayvalues-values)  
+  * [Warning message](#warning-message)  
+  * [Skipping breakpoints](#skipping-breakpoints)  
+- [TODO](#todo)  
+- [Suggestions](#suggestions)  
+ 
+<!-- tocstop -->
+</details>
 
 ## Usage
 This library adjust the `value` of the passed property according to passed `breakpoints`. Breakpoints can be defined on a component/page basis, but it can also be defined across the whole app, depending on one's needs.
@@ -9,35 +37,30 @@ This library adjust the `value` of the passed property according to passed `brea
 ## Simple flow
 1. Configure breakpoints
 2. Implement responsively in one of the following ways:
-    - Call the function with desired property and its responsive values via styles
-    - Pass props to component with supported [functions](https://github.com/danijelgrabez/responsively/blob/responsive-props/documentation/Property-list.md), or
+    - Pass props to component with supported [functions](documentation/Property-list.md)
+    - Call the function with desired property and its responsive values via styles, or
     - Pass `property` and `values` props to the component for single purpose usage
 3. Done 😇
 
-### Option 1: Call the function with desired property and its responsive values in style declaration
+### 1. Configure breakpoints
 ```javascript
-import React from 'react';
-import { css } from 'react-emotion';
+/**
+ * Configure breakpoints in any file which is being called
+ * on the top aplication level (e.g. App.js, utils.js, etc.)
+ */
 import Responsively from 'responsively';
 
 Responsively.configureBreakpoints([480, 768, 990, 1170]);
-
-const baseStyles = css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 50])};`;
-
-// or, add responsively directly to the component
-
-<Component className={css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 50])};`} />
 ```
 
-### Option 2: Pass props to component with supported functions
-Another handy approach is to integrate responsively functions to the component. This would provide an option to pass multiple responsive props to component. Check the documentation for all available [functions](https://github.com/danijelgrabez/responsively/blob/responsive-props/documentation/Property-list.md).
+### 2. Implementation
+#### Option 1: Pass props to component with supported functions
+With this handy approach we can integrate responsively functions which would provide an option to pass multiple responsive props to component. Check the documentation for all available [functions](documentation/Property-list.md).
 
 ```javascript
 import React from 'react';
 import styled, { css } from 'react-emotion';
-import Responsively, { background, text } from 'responsively';
-
-Responsively.configureBreakpoints([480, 768, 990, 1170]);
+import { background, text } from 'responsively';
 
 const SectionStyles = styled('section')(
   ...background,
@@ -68,14 +91,25 @@ import Section from '../ui';
 </Section>
  ```
 
-### Option 3: Pass `property` and `values` props to the component for single purpose usage
+ #### Option 2: Call the function with desired property and its responsive values in style declaration
+```javascript
+import React from 'react';
+import { css } from 'react-emotion';
+import Responsively from 'responsively';
+
+const baseStyles = css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 50])};`;
+
+// or, add responsively directly to the component
+
+<Component className={css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 50])};`} />
+```
+
+#### Option 3: Pass `property` and `values` props to the component for single purpose usage
 ```javascript
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import Responsively from 'responsively';
-
-Responsively.configureBreakpoints([480, 768, 990, 1170]);
 
 const baseStyles = ({ property, values }) =>
   css`
@@ -110,8 +144,8 @@ import Section from '../ui';
 
  ## Try It Out
  Try the examples on CodeSandbox:
- - Option 1: 👩‍🎤 [Emotion](https://codesandbox.io/s/xjyr0ox38w) | 💅 [Styled Components](https://codesandbox.io/s/7mo04o1361)
- - Option 2: 👩‍🎤 [Emotion](https://codesandbox.io/s/zn41vw6n9p)
+ - Option 1: 👩‍🎤 [Emotion](https://codesandbox.io/s/zn41vw6n9p)
+ - Option 2: 👩‍🎤 [Emotion](https://codesandbox.io/s/xjyr0ox38w) | 💅 [Styled Components](https://codesandbox.io/s/7mo04o1361)
  - Option 3: 👩‍🎤 [Emotion](https://codesandbox.io/s/wqjymvnyjw) | 💅 [Styled Components](https://codesandbox.io/s/1qwzy9mq)
 
 
@@ -215,7 +249,6 @@ Console warning message:
 
 ![responsively-warning](http://www.danijelgrabez.com/public-links/github/responsively/responsively-warning-message.png "Image of responsively warning message")
 
-
 ### Skipping breakpoints
 If particular breakpoint needs to be skipped, `undefined` value should be passed:
 ```javascript
@@ -237,7 +270,7 @@ will yield:
 ## TODO
 - [ ] Merge exact shorthand values, e.g. `'10 10' → 10px`
 - [ ] Add shorthand properties, e.g. `m → margin`, or `p → padding`
-- [ ] `¯\_(ツ)_/¯`
+- [ ] <img src="http://www.danijelgrabez.com/public-links/github/responsively/shrug.gif" height="18" alt= "Animated shrug">
 
 
 ## Suggestions?
