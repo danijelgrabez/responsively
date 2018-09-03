@@ -1,6 +1,6 @@
 {
   "name": "responsively",
-  "version": "1.0.17",
+  "version": "1.0.19",
   "description": "Easily adjust components with responsive, mobile-frist approach in mind.",
   "main": "dist/index.js",
   "scripts": {
