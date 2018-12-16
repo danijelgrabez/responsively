@@ -94,7 +94,7 @@ import Section from '../ui';
  #### Option 2: Call the function with desired property and its responsive values in style declaration
 ```javascript
 import React from 'react';
-import { css } from 'react-emotion';
+import { css } from '@emotion/core';
 import Responsively from 'responsively';
 
 const baseStyles = css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 50])};`;

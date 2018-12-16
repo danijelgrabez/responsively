@@ -1,6 +1,6 @@
 {
   "name": "responsively",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Easily adjust components with responsive, mobile-frist approach in mind.",
   "main": "dist/index.js",
   "scripts": {
@@ -36,7 +36,6 @@
   "repository": "https://github.com/danijelgrabez/responsively",
   "license": "MIT",
   "dependencies": {
-    "emotion": "^9.2.6",
-    "react-emotion": "^9.2.6"
+    "@emotion/core": "^10.0.5"
   }
 }
