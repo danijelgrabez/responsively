@@ -59,7 +59,8 @@ With this handy approach we can integrate responsively functions which would pro
 
 ```javascript
 import React from 'react';
-import styled, { css } from 'react-emotion';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 import { background, text } from 'responsively';
 
 const SectionStyles = styled('section')(
@@ -108,7 +109,8 @@ const baseStyles = css`${Responsively.responsive('margin-top')([10, 20, 30, 40, 
 ```javascript
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'react-emotion';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 import Responsively from 'responsively';
 
 const baseStyles = ({ property, values }) =>
